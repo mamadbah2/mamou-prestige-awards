@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────
+
+enum EditionStatus {
+  ongoing
+  completed
+}
+
+enum VoteType {
+  PUBLIC
+  JURY
+}
+
+// ─── Core Models ─────────────────────────────────────────
+
+model Edition {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  year       Int           @unique
+  status     EditionStatus
+  isActive   Boolean       @default(false)
+  categories Category[]
+  nominees   Nominee[]
+  results    CategoryResult[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model Category {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  slug         String
+  description  String
+  icon         String
+  nomineeCount Int       @default(0)
+  editionId    String    @db.ObjectId
+  edition      Edition   @relation(fields: [editionId], references: [id])
+  nominees     Nominee[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([slug, editionId])
+}
+
+model Nominee {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  categoryId   String   @db.ObjectId
+  categoryName String
+  description  String
+  imageUrl     String?
+  editionId    String   @db.ObjectId
+  edition      Edition  @relation(fields: [editionId], references: [id])
+  category     Category @relation(fields: [categoryId], references: [id])
+  votes        Vote[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─── Vote (Phase 4) ─────────────────────────────────────
+
+model Vote {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  nomineeId       String   @db.ObjectId
+  nominee         Nominee  @relation(fields: [nomineeId], references: [id])
+  voterIdentifier String
+  voteType        VoteType
+  score           Float
+  transactionRef  String?
+  captchaToken    String?
+  verified        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@index([nomineeId])
+  @@index([voterIdentifier])
+}
+
+// ─── Results ─────────────────────────────────────────────
+
+type NomineeResult {
+  nomineeId          String
+  name               String
+  publicScorePercent Float
+  juryScorePercent   Float
+  finalScore         Float
+}
+
+model CategoryResult {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  categoryId   String
+  categoryName String
+  winner       NomineeResult?
+  runnerUp     NomineeResult?
+  editionId    String         @db.ObjectId
+  edition      Edition        @relation(fields: [editionId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@unique([categoryId, editionId])
+}
+
+// ─── Content Models ──────────────────────────────────────
+
+model Partner {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  logoUrl    String?
+  websiteUrl String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  author    String
+  role      String
+  content   String
+  avatarUrl String?
+  edition   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MpaEvent {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  date        String
+  location    String
+  description String
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TeamMember {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  role     String
+  imageUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FaqItem {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  question String
+  answer   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model KeyFigure {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug        String   @unique
+  value       Int
+  suffix      String?
+  label       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model HistoryMilestone {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  year      Int      @unique
+  milestone String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
