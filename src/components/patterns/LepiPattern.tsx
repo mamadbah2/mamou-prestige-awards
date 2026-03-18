@@ -2,12 +2,14 @@ interface LepiPatternProps {
   className?: string;
   opacity?: number;
   color?: string;
+  patternId?: string;
 }
 
 export function LepiPattern({
   className = "",
   opacity = 0.06,
   color = "#ffffff",
+  patternId = "lepi-diamonds",
 }: LepiPatternProps) {
   return (
     <svg
@@ -16,7 +18,7 @@ export function LepiPattern({
     >
       <defs>
         <pattern
-          id="lepi-diamonds"
+          id={patternId}
           x="0"
           y="0"
           width="40"
@@ -47,7 +49,7 @@ export function LepiPattern({
           />
         </pattern>
       </defs>
-      <rect width="100%" height="100%" fill="url(#lepi-diamonds)" />
+      <rect width="100%" height="100%" fill={`url(#${patternId})`} />
     </svg>
   );
 }

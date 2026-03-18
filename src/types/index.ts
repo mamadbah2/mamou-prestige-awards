@@ -35,3 +35,56 @@ export interface NavItem {
   label: string;
   href: string;
 }
+
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  icon: string;
+  nomineeCount: number;
+}
+
+export interface Nominee {
+  id: string;
+  name: string;
+  categoryId: string;
+  categoryName: string;
+  description: string;
+  imageUrl?: string;
+  edition: number;
+}
+
+export interface EditionResult {
+  edition: number;
+  status: "completed" | "ongoing";
+  categories: CategoryResult[];
+}
+
+export interface CategoryResult {
+  categoryId: string;
+  categoryName: string;
+  winner?: NomineeResult;
+  runnerUp?: NomineeResult;
+}
+
+export interface NomineeResult {
+  nomineeId: string;
+  name: string;
+  publicScorePercent: number;
+  juryScorePercent: number;
+  finalScore: number;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  imageUrl?: string;
+}
+
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
