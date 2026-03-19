@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { categories } from "@/lib/data/categories";
 import { nominees } from "@/lib/data/nominees";
 import { getInitials, getAvatarColor } from "@/lib/utils";
+import { VoteButton } from "@/components/voting/VoteButton";
 
 interface NomineesListSectionProps {
   initialCategory?: string;
@@ -102,12 +103,15 @@ export function NomineesListSection({ initialCategory }: NomineesListSectionProp
                   >
                     Voir le profil
                   </Link>
-                  <Link
-                    href="/voter"
-                    className="flex-1 rounded-md bg-lepi-gold px-4 py-2 text-center text-sm font-semibold text-lepi-indigo transition-colors hover:bg-lepi-gold-dark"
-                  >
-                    Voter
-                  </Link>
+                  <VoteButton
+                    nominee={{
+                      id: nominee.id,
+                      name: nominee.name,
+                      categoryId: nominee.categoryId,
+                      categoryName: nominee.categoryName,
+                      imageUrl: nominee.imageUrl ?? undefined,
+                    }}
+                  />
                 </div>
               </CardContent>
             </Card>
