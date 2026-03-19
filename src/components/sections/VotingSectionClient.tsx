@@ -2,33 +2,58 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { categories } from "@/lib/data/categories";
-import { nominees } from "@/lib/data/nominees";
+import { VoteButton } from "@/components/voting/VoteButton";
 import { getInitials, getAvatarColor } from "@/lib/utils";
 
-interface NomineesListSectionProps {
-  initialCategory?: string;
+interface CategoryData {
+  id: string;
+  name: string;
+  slug: string;
+  nomineeCount: number;
 }
 
-export function NomineesListSection({ initialCategory }: NomineesListSectionProps) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(
-    initialCategory
-      ? categories.find((c) => c.slug === initialCategory)?.id ?? null
-      : null
-  );
+interface NomineeData {
+  id: string;
+  name: string;
+  categoryId: string;
+  categoryName: string;
+  description: string;
+  imageUrl: string | null;
+}
+
+interface VotingSectionClientProps {
+  categories: CategoryData[];
+  nominees: NomineeData[];
+}
+
+export function VotingSectionClient({
+  categories,
+  nominees,
+}: VotingSectionClientProps) {
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const filteredNominees = activeCategory
     ? nominees.filter((n) => n.categoryId === activeCategory)
     : nominees;
 
   return (
-    <section className="bg-lepi-white px-4 py-16 sm:py-20">
+    <section className="bg-lepi-cream px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl">
-        {/* Category filter bar */}
-        <div className="mb-10 flex gap-2 overflow-x-auto pb-2">
+        {/* Section heading */}
+        <div className="mb-10 text-center">
+          <h2 className="font-serif text-3xl font-bold text-lepi-indigo sm:text-4xl">
+            Votez pour vos <span className="text-lepi-gold">Favoris</span>
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+            Selectionnez une categorie puis cliquez sur &quot;Voter&quot; pour
+            soutenir votre nomine.
+          </p>
+        </div>
+
+        {/* Category filter bar — scrollable on mobile */}
+        <div className="mb-10 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
           <button
             onClick={() => setActiveCategory(null)}
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
@@ -95,19 +120,16 @@ export function NomineesListSection({ initialCategory }: NomineesListSectionProp
                 <p className="text-sm text-muted-foreground">
                   {nominee.description}
                 </p>
-                <div className="mt-4 flex gap-3">
-                  <Link
-                    href={`/nomines/${nominee.id}`}
-                    className="flex-1 rounded-md border border-lepi-indigo/20 px-4 py-2 text-center text-sm font-semibold text-lepi-indigo transition-colors hover:bg-lepi-indigo/5"
-                  >
-                    Voir le profil
-                  </Link>
-                  <Link
-                    href="/voter"
-                    className="flex-1 rounded-md bg-lepi-gold px-4 py-2 text-center text-sm font-semibold text-lepi-indigo transition-colors hover:bg-lepi-gold-dark"
-                  >
-                    Voter
-                  </Link>
+                <div className="mt-4">
+                  <VoteButton
+                    nominee={{
+                      id: nominee.id,
+                      name: nominee.name,
+                      categoryId: nominee.categoryId,
+                      categoryName: nominee.categoryName,
+                      imageUrl: nominee.imageUrl ?? undefined,
+                    }}
+                  />
                 </div>
               </CardContent>
             </Card>

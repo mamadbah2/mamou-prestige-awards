@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { VotingComingSoonSection } from "@/components/sections/VotingComingSoonSection";
+import { VotingSection } from "@/components/sections/VotingSection";
 import { VotingHowItWorksSection } from "@/components/sections/VotingHowItWorksSection";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Voter | Mamou Prestige Award 2026",
@@ -17,7 +19,7 @@ export default function VoterPage() {
         highlightedWord="Favoris"
         description="Soutenez les nomines qui incarnent l'excellence a Mamou."
       />
-      <VotingComingSoonSection />
+      <VotingSection />
       <VotingHowItWorksSection />
     </main>
   );

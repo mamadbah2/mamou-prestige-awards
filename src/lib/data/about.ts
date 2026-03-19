@@ -5,41 +5,49 @@ export const teamMembers: TeamMember[] = [
     id: "team-1",
     name: "Elhadj Ibrahima Sow",
     role: "President du Comite MPA",
+    imageUrl: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: "team-2",
     name: "Hadja Mariama Barry",
     role: "Directrice Generale",
+    imageUrl: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
     id: "team-3",
     name: "Alpha Amadou Diallo",
     role: "President du Jury",
+    imageUrl: "https://randomuser.me/api/portraits/men/35.jpg",
   },
   {
     id: "team-4",
     name: "Fatoumata Binta Bah",
     role: "Coordinatrice des Nominations",
+    imageUrl: "https://randomuser.me/api/portraits/women/36.jpg",
   },
   {
     id: "team-5",
     name: "Mamadou Cellou Barry",
     role: "Responsable Communication",
+    imageUrl: "https://randomuser.me/api/portraits/men/38.jpg",
   },
   {
     id: "team-6",
     name: "Aissatou Lamarana Sow",
     role: "Tresoriere",
+    imageUrl: "https://randomuser.me/api/portraits/women/48.jpg",
   },
   {
     id: "team-7",
     name: "Thierno Boubacar Balde",
     role: "Responsable Technique",
+    imageUrl: "https://randomuser.me/api/portraits/men/41.jpg",
   },
   {
     id: "team-8",
     name: "Kadiatou Camara",
     role: "Chargee des Partenariats",
+    imageUrl: "https://randomuser.me/api/portraits/women/52.jpg",
   },
 ];
 

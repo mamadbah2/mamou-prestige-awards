@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { teamMembers } from "@/lib/data/about";
 import { getInitials, getAvatarColor } from "@/lib/utils";
 
@@ -20,11 +21,21 @@ export function TeamSection() {
               key={member.id}
               className="flex flex-col items-center rounded-xl border border-lepi-indigo/10 bg-lepi-white p-6 text-center transition-shadow hover:shadow-md"
             >
-              <div
-                className={`flex h-16 w-16 items-center justify-center rounded-full text-lg font-bold text-lepi-white ${getAvatarColor(member.name)}`}
-              >
-                {getInitials(member.name)}
-              </div>
+              {member.imageUrl ? (
+                <Image
+                  src={member.imageUrl}
+                  alt={member.name}
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 rounded-full object-cover ring-2 ring-lepi-gold/20"
+                />
+              ) : (
+                <div
+                  className={`flex h-16 w-16 items-center justify-center rounded-full text-lg font-bold text-lepi-white ${getAvatarColor(member.name)}`}
+                >
+                  {getInitials(member.name)}
+                </div>
+              )}
               <h3 className="mt-4 font-serif font-semibold text-lepi-indigo">
                 {member.name}
               </h3>

@@ -100,12 +100,12 @@ export default async function NomineeDetailPage({ params }: NomineePageProps) {
               </p>
 
               <div className="mt-8">
-                <button
-                  disabled
-                  className="cursor-not-allowed rounded-md bg-lepi-gold/30 px-8 py-3 text-base font-bold text-lepi-indigo/50"
+                <Link
+                  href="/voter"
+                  className="inline-block rounded-md bg-lepi-gold px-8 py-3 text-base font-bold text-lepi-indigo transition-colors hover:bg-lepi-gold-dark"
                 >
-                  Voter pour {nominee.name} — Bientot disponible
-                </button>
+                  Voter pour {nominee.name}
+                </Link>
               </div>
             </div>
 
