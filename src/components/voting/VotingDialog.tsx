@@ -284,6 +284,11 @@ export function VotingDialog({ nominee, isOpen, onClose }: VotingDialogProps) {
                     max={100}
                     value={voteCount}
                     onChange={handleVoteInputChange}
+                    onFocus={(e) => {
+                      setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+                      }, 300);
+                    }}
                     className="h-12 w-20 rounded-lg border border-lepi-gold/30 bg-lepi-white text-center font-serif text-2xl font-bold text-lepi-indigo outline-none focus:border-lepi-gold focus:ring-2 focus:ring-lepi-gold/30"
                   />
                   <button

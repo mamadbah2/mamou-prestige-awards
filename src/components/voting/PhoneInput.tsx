@@ -30,6 +30,11 @@ export function PhoneInput({ value, onChange, error }: PhoneInputProps) {
             const digits = e.target.value.replace(/\D/g, "");
             onChange(digits);
           }}
+          onFocus={(e) => {
+            setTimeout(() => {
+              e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 300);
+          }}
           className={error ? "border-red-500 focus-visible:ring-red-500/50" : ""}
         />
       </div>
