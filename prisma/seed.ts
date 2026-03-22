@@ -15,6 +15,21 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding database...\n");
 
+  // ─── 0. Clean existing data (idempotent re-seed) ────
+  console.log("🧹 Cleaning existing data...");
+  await prisma.vote.deleteMany();
+  await prisma.nominee.deleteMany();
+  await prisma.categoryResult.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.partner.deleteMany();
+  await prisma.testimonial.deleteMany();
+  await prisma.mpaEvent.deleteMany();
+  await prisma.teamMember.deleteMany();
+  await prisma.faqItem.deleteMany();
+  await prisma.keyFigure.deleteMany();
+  await prisma.historyMilestone.deleteMany();
+  console.log("  ✓ All collections cleaned");
+
   // ─── 1. Editions ─────────────────────────────────────
   console.log("📅 Creating editions...");
 

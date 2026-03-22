@@ -10,7 +10,7 @@ export const keyFigures: KeyFigure[] = [
   },
   {
     id: "categories",
-    value: 25,
+    value: 17,
     label: "Categories",
     description: "Domaines d'excellence recompenses",
   },

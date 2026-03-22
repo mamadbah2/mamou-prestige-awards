@@ -1,35 +1,53 @@
 import Link from "next/link";
 import {
-  GraduationCap,
-  Briefcase,
-  HeartPulse,
-  Palette,
-  Trophy,
-  Wheat,
-  Users,
-  HandHeart,
+  UserCheck,
   Radio,
+  Building2,
+  HandHeart,
+  Briefcase,
   Lightbulb,
+  FolderHeart,
+  Music,
+  BookOpen,
+  Camera,
+  Disc3,
+  PartyPopper,
+  Trophy,
+  Users,
+  Flame,
+  Crown,
+  GraduationCap,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { categories } from "@/lib/data/categories";
+// import { categories } from "@/lib/data/categories";
 import type { LucideIcon } from "lucide-react";
+import { getCategoriesFromDB } from "@/lib/data/queries";
 
 const iconMap: Record<string, LucideIcon> = {
-  GraduationCap,
-  Briefcase,
-  HeartPulse,
-  Palette,
-  Trophy,
-  Wheat,
-  Users,
-  HandHeart,
+  UserCheck,
   Radio,
+  Building2,
+  HandHeart,
+  Briefcase,
   Lightbulb,
+  FolderHeart,
+  Music,
+  BookOpen,
+  Camera,
+  Disc3,
+  PartyPopper,
+  Trophy,
+  Users,
+  Flame,
+  Crown,
+  GraduationCap,
 };
 
-export function CategoriesGridSection() {
+export async function CategoriesGridSection() {
+  const [categories] = await Promise.all([
+      getCategoriesFromDB(),
+    ]);
   return (
     <section className="bg-lepi-cream px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl">
@@ -62,13 +80,13 @@ export function CategoriesGridSection() {
                       variant="secondary"
                       className="bg-lepi-indigo/10 text-lepi-indigo"
                     >
-                      {category.nomineeCount} nomines
+                      {category.nomineeCount} nominés
                     </Badge>
                     <Link
                       href={`/nomines?categorie=${category.slug}`}
                       className="text-sm font-semibold text-lepi-gold transition-colors hover:text-lepi-gold-dark"
                     >
-                      Voir les nomines →
+                      Voir les nominés →
                     </Link>
                   </div>
                 </CardContent>

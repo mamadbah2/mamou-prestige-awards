@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/sections/HeroSection";
+import { ValuesSection } from "@/components/sections/ValuesSection";
 import { EventsSection } from "@/components/sections/EventsSection";
 import { KeyFiguresSection } from "@/components/sections/KeyFiguresSection";
 import { PartnersSection } from "@/components/sections/PartnersSection";
@@ -11,6 +12,7 @@ export default function Home() {
       <EventsSection />
       <KeyFiguresSection />
       <PartnersSection />
+      <ValuesSection />
       <TestimonialsSection />
     </main>
   );

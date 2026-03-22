@@ -11,10 +11,16 @@ export async function getCategoriesFromDB(editionYear?: number) {
 
   if (!edition) return [];
 
-  return prisma.category.findMany({
+  const categories = await prisma.category.findMany({
     where: { editionId: edition.id },
+    include: { _count: { select: { nominees: true } } },
     orderBy: { name: "asc" },
   });
+
+  return categories.map(({ _count, ...cat }) => ({
+    ...cat,
+    nomineeCount: _count.nominees,
+  }));
 }
 
 export async function getNomineesFromDB(editionYear?: number) {

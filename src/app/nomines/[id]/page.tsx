@@ -5,9 +5,11 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { LepiPattern } from "@/components/patterns/LepiPattern";
-import { nominees } from "@/lib/data/nominees";
-import { getNomineesByCategory } from "@/lib/data/nominees";
-import { categories } from "@/lib/data/categories";
+import {
+  getNomineesFromDB,
+  getNomineeByIdFromDB,
+  getNomineesByCategoryFromDB,
+} from "@/lib/data/queries";
 import { getInitials, getAvatarColor } from "@/lib/utils";
 
 interface NomineePageProps {
@@ -16,7 +18,7 @@ interface NomineePageProps {
 
 export async function generateMetadata({ params }: NomineePageProps): Promise<Metadata> {
   const { id } = await params;
-  const nominee = nominees.find((n) => n.id === id);
+  const nominee = await getNomineeByIdFromDB(id);
   if (!nominee) return { title: "Nomine introuvable | MPA 2026" };
   return {
     title: `${nominee.name} — ${nominee.categoryName} | MPA 2026`,
@@ -24,18 +26,19 @@ export async function generateMetadata({ params }: NomineePageProps): Promise<Me
   };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const nominees = await getNomineesFromDB();
   return nominees.map((n) => ({ id: n.id }));
 }
 
 export default async function NomineeDetailPage({ params }: NomineePageProps) {
   const { id } = await params;
-  const nominee = nominees.find((n) => n.id === id);
+  const nominee = await getNomineeByIdFromDB(id);
 
   if (!nominee) notFound();
 
-  const category = categories.find((c) => c.id === nominee.categoryId);
-  const otherNominees = getNomineesByCategory(nominee.categoryId).filter(
+  const category = nominee.category;
+  const otherNominees = (await getNomineesByCategoryFromDB(nominee.categoryId)).filter(
     (n) => n.id !== nominee.id
   );
 
@@ -79,7 +82,7 @@ export default async function NomineeDetailPage({ params }: NomineePageProps) {
                 {nominee.name}
               </h1>
               <p className="mt-2 text-sm text-lepi-white/60">
-                Edition {nominee.edition} — {category?.name}
+                Edition 2026 — {category?.name}
               </p>
             </div>
           </div>
