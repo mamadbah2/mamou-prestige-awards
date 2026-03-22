@@ -21,6 +21,7 @@ interface NomineeData {
   categoryName: string;
   description: string;
   imageUrl: string | null;
+  voteCount: number;
 }
 
 interface VotingSectionClientProps {
@@ -34,9 +35,11 @@ export function VotingSectionClient({
 }: VotingSectionClientProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  const filteredNominees = activeCategory
-    ? nominees.filter((n) => n.categoryId === activeCategory)
-    : nominees;
+  const filteredNominees = (
+    activeCategory
+      ? nominees.filter((n) => n.categoryId === activeCategory)
+      : nominees
+  ).sort((a, b) => b.voteCount - a.voteCount);
 
   return (
     <section className="bg-lepi-cream px-4 py-16 sm:py-20">
@@ -107,12 +110,17 @@ export function VotingSectionClient({
                     <CardTitle className="font-serif text-lg text-lepi-indigo">
                       {nominee.name}
                     </CardTitle>
-                    <Badge
-                      variant="secondary"
-                      className="mt-1 bg-lepi-gold/10 text-lepi-gold-dark"
-                    >
-                      {nominee.categoryName}
-                    </Badge>
+                    <div className="mt-1 flex items-center gap-2">
+                      <Badge
+                        variant="secondary"
+                        className="bg-lepi-gold/10 text-lepi-gold-dark"
+                      >
+                        {nominee.categoryName}
+                      </Badge>
+                      <span className="text-xs font-medium text-lepi-indigo/60">
+                        {nominee.voteCount} vote{nominee.voteCount !== 1 ? "s" : ""}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
