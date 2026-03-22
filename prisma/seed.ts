@@ -69,6 +69,8 @@ async function main() {
         description: cat.description,
         icon: cat.icon,
         nomineeCount: cat.nomineeCount,
+        votingStartDate: cat.votingStartDate ? new Date(cat.votingStartDate) : null,
+        votingEndDate: cat.votingEndDate ? new Date(cat.votingEndDate) : null,
       },
       create: {
         name: cat.name,
@@ -76,6 +78,8 @@ async function main() {
         description: cat.description,
         icon: cat.icon,
         nomineeCount: cat.nomineeCount,
+        votingStartDate: cat.votingStartDate ? new Date(cat.votingStartDate) : null,
+        votingEndDate: cat.votingEndDate ? new Date(cat.votingEndDate) : null,
         editionId: edition2026.id,
       },
     });

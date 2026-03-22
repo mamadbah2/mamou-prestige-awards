@@ -32,6 +32,16 @@ export async function submitVote(input: VoteSubmissionInput): Promise<VoteResult
       return { success: false, error: "Ce nomine n'existe pas." };
     }
 
+    // 2b. Check voting window
+    const now = new Date();
+    const { votingStartDate, votingEndDate } = nominee.category;
+    if (votingStartDate && now < votingStartDate) {
+      return { success: false, error: "Le vote pour cette catégorie n'a pas encore commencé." };
+    }
+    if (votingEndDate && now > votingEndDate) {
+      return { success: false, error: "Le vote pour cette catégorie est terminé." };
+    }
+
     // 3. Verify CAPTCHA
     const captchaValid = await verifyCaptchaToken(captchaToken);
     if (!captchaValid) {

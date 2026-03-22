@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { VoteButton } from "@/components/voting/VoteButton";
+import { CountdownBadge } from "@/components/voting/CountdownBadge";
 import { getInitials, getAvatarColor } from "@/lib/utils";
 
 interface CategoryData {
@@ -12,6 +13,8 @@ interface CategoryData {
   name: string;
   slug: string;
   nomineeCount: number;
+  votingStartDate: string | null;
+  votingEndDate: string | null;
 }
 
 interface NomineeData {
@@ -128,17 +131,34 @@ export function VotingSectionClient({
                 <p className="text-sm text-muted-foreground">
                   {nominee.description}
                 </p>
-                <div className="mt-4">
-                  <VoteButton
-                    nominee={{
-                      id: nominee.id,
-                      name: nominee.name,
-                      categoryId: nominee.categoryId,
-                      categoryName: nominee.categoryName,
-                      imageUrl: nominee.imageUrl ?? undefined,
-                    }}
-                  />
-                </div>
+                {(() => {
+                  const cat = categories.find((c) => c.id === nominee.categoryId);
+                  const startDate = cat?.votingStartDate ?? null;
+                  const endDate = cat?.votingEndDate ?? null;
+                  const now = new Date();
+                  const hasStarted = !startDate || now >= new Date(startDate);
+                  const isExpired = !!endDate && now > new Date(endDate);
+                  const isVotingOpen = hasStarted && !isExpired;
+                  return (
+                    <>
+                      <div className="mt-3">
+                        <CountdownBadge startDate={startDate} endDate={endDate} />
+                      </div>
+                      <div className="mt-3">
+                        <VoteButton
+                          nominee={{
+                            id: nominee.id,
+                            name: nominee.name,
+                            categoryId: nominee.categoryId,
+                            categoryName: nominee.categoryName,
+                            imageUrl: nominee.imageUrl ?? undefined,
+                          }}
+                          disabled={!isVotingOpen}
+                        />
+                      </div>
+                    </>
+                  );
+                })()}
               </CardContent>
             </Card>
           ))}

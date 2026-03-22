@@ -8,6 +8,8 @@ export const categories: Category[] = [
     description: "Récompense la personnalité publique ayant le plus marqué la vie de Mamou par son leadership et son engagement.",
     icon: "UserCheck",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-2",
@@ -16,6 +18,8 @@ export const categories: Category[] = [
     description: "Célèbre le média qui informe, connecte et inspire la communauté de Mamou avec excellence.",
     icon: "Radio",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-3",
@@ -24,6 +28,8 @@ export const categories: Category[] = [
     description: "Honore l'association qui contribue le plus au développement socio-économique de la préfecture.",
     icon: "Building2",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-4",
@@ -32,6 +38,8 @@ export const categories: Category[] = [
     description: "Met en lumière l'initiative ayant le plus grand impact social positif sur la communauté.",
     icon: "HandHeart",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
 {
     id: "cat-5",
@@ -40,6 +48,8 @@ export const categories: Category[] = [
     description: "Récompense l'entrepreneur(e) qui innove et dynamise l'économie locale de Mamou.",
     icon: "Briefcase",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-6",
@@ -48,6 +58,8 @@ export const categories: Category[] = [
     description: "Célèbre l'innovation qui transforme positivement le quotidien des habitants de Mamou.",
     icon: "Lightbulb",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-7",
@@ -56,6 +68,8 @@ export const categories: Category[] = [
     description: "Honore le projet communautaire ayant le plus fédéré et impacté la vie locale.",
     icon: "FolderHeart",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
 {
     id: "cat-8",
@@ -64,6 +78,8 @@ export const categories: Category[] = [
     description: "Récompense l'artiste musical émergent qui fait vibrer Mamou par son talent.",
     icon: "Music",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-9",
@@ -72,6 +88,8 @@ export const categories: Category[] = [
     description: "Célèbre le jeune talent littéraire qui enrichit le patrimoine culturel de la région.",
     icon: "BookOpen",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-10",
@@ -80,6 +98,8 @@ export const categories: Category[] = [
     description: "Honore le photographe qui capture avec excellence la beauté et la vie de Mamou.",
     icon: "Camera",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-11",
@@ -88,6 +108,8 @@ export const categories: Category[] = [
     description: "Récompense le DJ qui anime et fait danser Mamou avec talent et créativité.",
     icon: "Disc3",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-12",
@@ -96,6 +118,8 @@ export const categories: Category[] = [
     description: "Célèbre l'établissement nocturne offrant la meilleure expérience festive à Mamou.",
     icon: "PartyPopper",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
 {
     id: "cat-13",
@@ -104,6 +128,8 @@ export const categories: Category[] = [
     description: "Récompense le footballeur qui excelle sur le terrain et inspire la jeunesse de Mamou.",
     icon: "Trophy",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-14",
@@ -112,6 +138,8 @@ export const categories: Category[] = [
     description: "Honore l'équipe de football qui porte haut les couleurs de Mamou.",
     icon: "Users",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
 {
     id: "cat-15",
@@ -120,6 +148,8 @@ export const categories: Category[] = [
     description: "Célèbre le jeune dont l'engagement citoyen transforme positivement sa communauté.",
     icon: "Flame",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-16",
@@ -128,6 +158,8 @@ export const categories: Category[] = [
     description: "Récompense la jeune femme incarnant l'élégance, l'intelligence et les valeurs de Mamou.",
     icon: "Crown",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
   {
     id: "cat-17",
@@ -136,5 +168,7 @@ export const categories: Category[] = [
     description: "Honore le jeune homme incarnant le charisme, le leadership et l'excellence à Mamou.",
     icon: "GraduationCap",
     nomineeCount: 0,
+    votingStartDate: "2026-03-15T00:00:00.000Z",
+    votingEndDate: "2026-04-30T23:59:59.000Z",
   },
 ];

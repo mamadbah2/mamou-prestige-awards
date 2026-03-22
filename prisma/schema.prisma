@@ -39,8 +39,10 @@ model Category {
   slug         String
   description  String
   icon         String
-  nomineeCount Int       @default(0)
-  editionId    String    @db.ObjectId
+  nomineeCount    Int       @default(0)
+  votingStartDate DateTime?
+  votingEndDate   DateTime?
+  editionId       String    @db.ObjectId
   edition      Edition   @relation(fields: [editionId], references: [id])
   nominees     Nominee[]
   createdAt    DateTime  @default(now())

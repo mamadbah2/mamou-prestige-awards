@@ -23,6 +23,8 @@ export async function VotingSection() {
     name: c.name,
     slug: c.slug,
     nomineeCount: c.nomineeCount,
+    votingStartDate: c.votingStartDate?.toISOString() ?? null,
+    votingEndDate: c.votingEndDate?.toISOString() ?? null,
   }));
 
   const serializedNominees = nominees

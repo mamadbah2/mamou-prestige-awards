@@ -43,6 +43,8 @@ export interface Category {
   description: string;
   icon: string;
   nomineeCount: number;
+  votingStartDate?: string;
+  votingEndDate?: string;
 }
 
 export interface Nominee {
