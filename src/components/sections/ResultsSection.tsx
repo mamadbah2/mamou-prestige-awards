@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Trophy, Medal, Calendar } from "lucide-react";
+import { Trophy, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { editionResults } from "@/lib/data/results";
@@ -98,23 +98,6 @@ export function ResultsSection() {
                         <span className="font-semibold text-lepi-gold-dark">
                           Final : {cat.winner.finalScore}%
                         </span>
-                      </div>
-                    </div>
-                  )}
-                  {/* Runner-up */}
-                  {cat.runnerUp && (
-                    <div className="rounded-lg bg-lepi-indigo/5 p-3">
-                      <div className="flex items-center gap-2">
-                        <Medal className="h-4 w-4 text-lepi-indigo/60" />
-                        <span className="text-xs font-medium text-lepi-indigo/60">
-                          2e place
-                        </span>
-                      </div>
-                      <p className="mt-1 text-sm font-medium text-lepi-indigo/80">
-                        {cat.runnerUp.name}
-                      </p>
-                      <div className="mt-1 text-xs text-muted-foreground">
-                        Final : {cat.runnerUp.finalScore}%
                       </div>
                     </div>
                   )}
