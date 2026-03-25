@@ -104,7 +104,7 @@ export default async function NomineeDetailPage({ params }: NomineePageProps) {
 
               <div className="mt-8">
                 <Link
-                  href="/voter"
+                  href="/nomines"
                   className="inline-block rounded-md bg-lepi-gold px-8 py-3 text-base font-bold text-lepi-indigo transition-colors hover:bg-lepi-gold-dark"
                 >
                   Voter pour {nominee.name}

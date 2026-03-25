@@ -45,7 +45,7 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/voter"
+            href="/nomines"
             className="ml-3 rounded-md bg-lepi-gold px-5 py-2 text-sm font-bold text-lepi-indigo transition-colors hover:bg-lepi-gold-light"
           >
             Voter
@@ -86,7 +86,7 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/voter"
+            href="/nomines"
             className="mt-2 block rounded-md bg-lepi-gold px-3 py-2 text-center text-base font-bold text-lepi-indigo transition-colors hover:bg-lepi-gold-light"
             onClick={() => setMobileMenuOpen(false)}
           >

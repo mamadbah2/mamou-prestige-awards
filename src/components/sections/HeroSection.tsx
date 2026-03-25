@@ -36,7 +36,7 @@ export function HeroSection() {
 
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <Link
-            href="/voter"
+            href="/nomines"
             className="rounded-md bg-lepi-gold px-8 py-3 text-base font-bold text-lepi-indigo transition-colors hover:bg-lepi-gold-light"
           >
             Voter Maintenant
