@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { LepiPattern } from "@/components/patterns/LepiPattern";
+import { VoteButton } from "@/components/voting/VoteButton";
 import {
   getNomineesFromDB,
   getNomineeByIdFromDB,
@@ -103,12 +104,23 @@ export default async function NomineeDetailPage({ params }: NomineePageProps) {
               </p>
 
               <div className="mt-8">
-                <Link
-                  href="/nomines"
-                  className="inline-block rounded-md bg-lepi-gold px-8 py-3 text-base font-bold text-lepi-indigo transition-colors hover:bg-lepi-gold-dark"
-                >
-                  Voter pour {nominee.name}
-                </Link>
+                <VoteButton
+                  nominee={{
+                    id: nominee.id,
+                    name: nominee.name,
+                    categoryId: nominee.categoryId,
+                    categoryName: nominee.categoryName,
+                    imageUrl: nominee.imageUrl ?? undefined,
+                  }}
+                  disabled={(() => {
+                    const now = new Date();
+                    const hasDates = !!category?.votingStartDate || !!category?.votingEndDate;
+                    if (!hasDates) return true;
+                    const hasStarted = !category?.votingStartDate || now >= category.votingStartDate;
+                    const isExpired = !!category?.votingEndDate && now > category.votingEndDate;
+                    return !hasStarted || isExpired;
+                  })()}
+                />
               </div>
             </div>
 
