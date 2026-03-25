@@ -7,7 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getInitials, getAvatarColor } from "@/lib/utils";
 import { VoteButton } from "@/components/voting/VoteButton";
-import { CountdownBadge } from "@/components/voting/CountdownBadge";
+import { useCountdown } from "@/hooks/useCountdown";
+import { Clock, Lock, Timer } from "lucide-react";
 
 interface Category {
   id: string;
@@ -34,6 +35,88 @@ interface NomineesListSectionClientProps {
   initialCategory?: string;
 }
 
+function CategoryCountdown({
+  startDate,
+  endDate,
+}: {
+  startDate: string | null;
+  endDate: string | null;
+}) {
+  const { days, hours, minutes, seconds, isExpired, hasStarted } = useCountdown(
+    startDate,
+    endDate
+  );
+
+  if (!startDate && !endDate) {
+    return (
+      <div className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+        <Lock className="h-4 w-4 text-gray-400" />
+        <span className="text-sm font-medium text-gray-500">
+          Dates de vote non configurees
+        </span>
+      </div>
+    );
+  }
+
+  if (!hasStarted) {
+    return (
+      <div className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+        <Clock className="h-4 w-4 text-gray-500" />
+        <span className="text-sm font-medium text-gray-500">
+          Le vote n&apos;a pas encore commence
+        </span>
+      </div>
+    );
+  }
+
+  if (isExpired) {
+    return (
+      <div className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+        <Lock className="h-4 w-4 text-gray-400" />
+        <span className="text-sm font-medium text-gray-400">
+          Le vote est termine pour cette categorie
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-3 rounded-xl border border-lepi-indigo/15 bg-lepi-indigo/5 px-4 py-3">
+      <Timer className="h-4 w-4 text-lepi-indigo" />
+      <span className="text-sm font-medium text-lepi-indigo">
+        Fermeture dans
+      </span>
+      <div className="flex gap-2">
+        {days > 0 && (
+          <span className="rounded-md bg-lepi-indigo px-2 py-1 text-xs font-bold tabular-nums text-lepi-white">
+            {days}j
+          </span>
+        )}
+        <span className="rounded-md bg-lepi-indigo px-2 py-1 text-xs font-bold tabular-nums text-lepi-white">
+          {String(hours).padStart(2, "0")}h
+        </span>
+        <span className="rounded-md bg-lepi-indigo px-2 py-1 text-xs font-bold tabular-nums text-lepi-white">
+          {String(minutes).padStart(2, "0")}m
+        </span>
+        <span className="rounded-md bg-lepi-indigo px-2 py-1 text-xs font-bold tabular-nums text-lepi-white">
+          {String(seconds).padStart(2, "0")}s
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function useIsVotingOpen(category: Category | undefined): boolean {
+  const { isExpired, hasStarted } = useCountdown(
+    category?.votingStartDate ?? null,
+    category?.votingEndDate ?? null
+  );
+
+  if (!category) return false;
+  if (!category.votingStartDate && !category.votingEndDate) return false;
+  return hasStarted && !isExpired;
+}
+
 export function NomineesListSectionClient({
   categories,
   nominees,
@@ -45,6 +128,12 @@ export function NomineesListSectionClient({
       : null
   );
 
+  const activeCat = activeCategory
+    ? categories.find((c) => c.id === activeCategory)
+    : undefined;
+
+  const isVotingOpen = useIsVotingOpen(activeCat);
+
   const filteredNominees = (
     activeCategory
       ? nominees.filter((n) => n.categoryId === activeCategory)
@@ -55,7 +144,7 @@ export function NomineesListSectionClient({
     <section className="bg-lepi-white px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl">
         {/* Category filter bar */}
-        <div className="mb-10 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div className="mb-6 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
           <button
             onClick={() => setActiveCategory(null)}
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
@@ -81,16 +170,35 @@ export function NomineesListSectionClient({
           ))}
         </div>
 
+        {/* Single countdown for the active category */}
+        {activeCat && (
+          <div className="mb-8">
+            <CategoryCountdown
+              startDate={activeCat.votingStartDate}
+              endDate={activeCat.votingEndDate}
+            />
+          </div>
+        )}
+
         {/* Nominees grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredNominees.map((nominee) => {
-            const cat = categories.find((c) => c.id === nominee.categoryId);
-            const startDate = cat?.votingStartDate ?? null;
-            const endDate = cat?.votingEndDate ?? null;
+            // When viewing "Toutes", determine voting status per nominee's category
+            const nomineeCat = activeCategory
+              ? activeCat
+              : categories.find((c) => c.id === nominee.categoryId);
+            const hasVotingDates =
+              !!nomineeCat?.votingStartDate || !!nomineeCat?.votingEndDate;
             const now = new Date();
-            const hasStarted = !startDate || now >= new Date(startDate);
-            const isExpired = !!endDate && now > new Date(endDate);
-            const isVotingOpen = hasStarted && !isExpired;
+            const hasStarted =
+              !nomineeCat?.votingStartDate ||
+              now >= new Date(nomineeCat.votingStartDate);
+            const isExpiredNominee =
+              !!nomineeCat?.votingEndDate &&
+              now > new Date(nomineeCat.votingEndDate);
+            const canVote = activeCategory
+              ? isVotingOpen
+              : hasVotingDates && hasStarted && !isExpiredNominee;
 
             return (
               <Card
@@ -136,9 +244,6 @@ export function NomineesListSectionClient({
                   <p className="text-sm text-muted-foreground">
                     {nominee.description}
                   </p>
-                  <div className="mt-3">
-                    <CountdownBadge startDate={startDate} endDate={endDate} />
-                  </div>
                   <div className="mt-3 flex gap-3">
                     <Link
                       href={`/nomines/${nominee.id}`}
@@ -154,7 +259,7 @@ export function NomineesListSectionClient({
                         categoryName: nominee.categoryName,
                         imageUrl: nominee.imageUrl ?? undefined,
                       }}
-                      disabled={!isVotingOpen}
+                      disabled={!canVote}
                     />
                   </div>
                 </CardContent>

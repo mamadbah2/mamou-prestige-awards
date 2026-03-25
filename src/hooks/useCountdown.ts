@@ -6,6 +6,7 @@ interface CountdownResult {
   days: number;
   hours: number;
   minutes: number;
+  seconds: number;
   isExpired: boolean;
   hasStarted: boolean;
 }
@@ -17,7 +18,7 @@ export function useCountdown(
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 60_000);
+    const interval = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -30,13 +31,15 @@ export function useCountdown(
   let days = 0;
   let hours = 0;
   let minutes = 0;
+  let seconds = 0;
 
   if (hasStarted && !isExpired && end) {
     const diff = end.getTime() - now.getTime();
     days = Math.floor(diff / (1000 * 60 * 60 * 24));
     hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    seconds = Math.floor((diff % (1000 * 60)) / 1000);
   }
 
-  return { days, hours, minutes, isExpired, hasStarted };
+  return { days, hours, minutes, seconds, isExpired, hasStarted };
 }
